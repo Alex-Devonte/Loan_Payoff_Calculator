@@ -1,16 +1,28 @@
 <div id="calculator-container">
-  <div class="field-group">
-    <label class="field-label">Current Loan Balance</label>
-    <input type="text" id="loan-balance" placeholder="$0.00">
-  </div>
-  <div class="field-group">
-    <label class="field-label">Annual Percentage Rate</label>
-    <input type="text" id="APR" placeholder="0.00%">
-  </div>
-  <div class="field-group">
-    <label class="field-label">Monthly Payment</label>
-    <input type="text" id="monthly-payment" placeholder="$0.00">
-  </div>
-  <button id="calculate-btn">Calculate</button><br>
+  <form (ngSubmit)="calculateLoanPayoff()" #loanForm="ngForm">
+    <div class="field-group">
+      <!-- Loan Balance -->
+      <div *ngIf="loanBalance.errors?.required && loanBalance.touched" class="error-msg">Please enter loan balance</div>
+      <div *ngIf="loanBalance.errors?.pattern && loanBalance.touched"  class="error-msg">Loan balance can only contain numbers and a single decimal point</div>
+      <label class="field-label">Current Loan Balance</label>
+      <input type="text" name="loanBalance" #loanBalance="ngModel" [(ngModel)]="model.loanBalance" id="loan-balance" placeholder="$0.00" required pattern="^[0-9]\d*(\.\d+)?$">
+    </div>
+    <div class="field-group">
+      <!-- APR -->
+      <div *ngIf="APR.errors?.required && APR.touched" class="error-msg">Please enter APR</div>
+      <div *ngIf="APR.errors?.pattern && APR.touched"  class="error-msg">APR can only contain numbers and a single decimal point</div>
+      <label class="field-label">Annual Percentage Rate</label>
+      <input type="text" name="APR" #APR="ngModel" [(ngModel)]="model.APR" id="APR" placeholder="0.00%" required  pattern="^[0-9]\d*(\.\d+)?$">
+    </div>
+    <div class="field-group">
+      <!-- Monthly Payment -->
+      <div *ngIf="monthlyPayment.errors?.required && monthlyPayment.touched" class="error-msg">Please enter a monthly payment</div>
+      <div *ngIf="monthlyPayment.errors?.pattern && monthlyPayment.touched"  class="error-msg">Monthly Payment can only contain numbers and a single decimal point</div>
+      <label class="field-label">Monthly Payment</label>
+      <input type="text" name="monthlyPayment" #monthlyPayment="ngModel" [(ngModel)]="model.monthlyPayment" id="monthly-payment" placeholder="$0.00" required  pattern="^[0-9]\d*(\.\d+)?$">
+    </div>
+    <button id="calculate-btn" [disabled]="loanForm.invalid" type="submit">Calculate</button><br>
+  </form>
   <p id="clear">Clear</p>
 </div>
+<app-results></app-results>

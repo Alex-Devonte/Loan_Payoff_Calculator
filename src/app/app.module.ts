@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { ResultsComponent } from './results/results.component';
-
+import { DataTransferService } from './data-transfer.service';
+//Added service
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { ResultsComponent } from './results/results.component';
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [DataTransferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

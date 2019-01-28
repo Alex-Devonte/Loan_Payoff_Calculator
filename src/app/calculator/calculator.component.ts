@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { DataTransferService } from '../data-transfer.service';
 @Component({
   selector: 'app-calculator',
   templateUrl: './calculator.component.html',
@@ -8,25 +8,20 @@ import { Component, OnInit } from '@angular/core';
 export class CalculatorComponent implements OnInit {
 
   model: any = {};
-  constructor() { }
+  private loadComponent = false;
+  constructor(private transferService:DataTransferService) {}
 
   ngOnInit() {
     
   }
-  
-  getLoanBalance(bal) {
-    console.log("Balance: " + bal)  ;
-  }
 
   calculateLoanPayoff()  {
-    var monthlyInterest = this.calculateMonthlyInterest(this.model.APR);
-    var remainingPayments = this.calculateRemainingPayments(monthlyInterest, this.model.monthlyPayment, this.model.loanBalance);
-    var totalInterest = this.calculateTotalInterest(remainingPayments, this.model.monthlyPayment, this.model.loanBalance);
-    console.log(this.model);
-    console.log("Monthly Interest: " + monthlyInterest);
-    console.log("Remaining Payments: " + Math.round(remainingPayments));
-    console.log("Total Interest: " + totalInterest);
-    console.log(-Math.log(1-(0.5/100)*3500/100)/Math.log(1+ (0.5/100)));
+    this.model.monthlyInterest = this.calculateMonthlyInterest(this.model.APR);
+    this.model.remainingPayments = this.calculateRemainingPayments(this.model.monthlyInterest, this.model.monthlyPayment, this.model.loanBalance);
+    this.model.totalInterest = this.calculateTotalInterest(this.model.remainingPayments, this.model.monthlyPayment, this.model.loanBalance);
+    this.model.yearsLeft = (this.model.remainingPayments/12);
+   
+    this.transferService.setData(this.model);
   }
 
   calculateMonthlyInterest(APR) {
@@ -39,5 +34,9 @@ export class CalculatorComponent implements OnInit {
 
   calculateTotalInterest(remainingPayments, monthlyPayment, principal) {
     return Math.round((remainingPayments * monthlyPayment - principal));
+  }
+
+  showResults() {
+     this.loadComponent = true;
   }
 }

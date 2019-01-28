@@ -21,8 +21,8 @@
       <label class="field-label">Monthly Payment</label>
       <input type="text" name="monthlyPayment" #monthlyPayment="ngModel" [(ngModel)]="model.monthlyPayment" id="monthly-payment" placeholder="$0.00" required  pattern="^[0-9]\d*(\.\d+)?$">
     </div>
-    <button id="calculate-btn" [disabled]="loanForm.invalid" type="submit">Calculate</button><br>
+    <button id="calculate-btn" [disabled]="loanForm.invalid" type="submit" (click)="showResults();">Calculate</button><br>
   </form>
   <p id="clear">Clear</p>
 </div>
-<app-results></app-results>
+<app-results *ngIf="loadComponent"></app-results>

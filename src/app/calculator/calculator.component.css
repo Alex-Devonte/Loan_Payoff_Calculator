@@ -84,6 +84,10 @@ input {
 }
 
 @media screen and (min-width: 768px) {
+  #calculator-container {
+    margin-bottom: 50px;
+  }
+
   input {
     width: 35%;
   }

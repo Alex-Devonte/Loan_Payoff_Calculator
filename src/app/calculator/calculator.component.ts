@@ -16,7 +16,6 @@ export class CalculatorComponent implements OnInit {
   calculateLoanPayoff()  {
     this.model.monthlyInterest = this.calculateMonthlyInterest(this.model.APR);
     this.model.remainingPayments = Math.round(this.calculateRemainingPayments(this.model.monthlyInterest, this.model.monthlyPayment, this.model.loanBalance));
-    this.model.totalInterest = this.calculateTotalInterest(this.model.remainingPayments, this.model.monthlyPayment, this.model.loanBalance);
     this.model.yearsLeft = (this.model.remainingPayments/12).toFixed(1);
     this.calculateAmortizationSchedule();
 
@@ -31,9 +30,10 @@ export class CalculatorComponent implements OnInit {
     return (-Math.log(1-monthlyInterest * principal / monthlyPayment) / Math.log(1+monthlyInterest));
   }
 
-  calculateTotalInterest(remainingPayments, monthlyPayment, principal) {
-    return Math.round((remainingPayments * monthlyPayment - principal));
-  }
+  /*calculateTotalInterest(remainingPayments, monthlyPayment, principal) {
+    console.log ((remainingPayments * monthlyPayment - principal));
+    return ((remainingPayments * monthlyPayment - principal));
+  }*/
 
   calculateAmortizationSchedule() {
     var balance = this.model.loanBalance;
@@ -68,8 +68,8 @@ export class CalculatorComponent implements OnInit {
       //Keep track of remaing monthly balance
       balance -= monthlyPrincipal;
     }
-    console.log(data);
-    this.model.data = data;
+    this.model.totalInterest = Math.round(totalInterest);
+    this.model.chartData = data;
   }
 
   showResults() {

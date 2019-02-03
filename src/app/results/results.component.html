@@ -1,12 +1,12 @@
-<h2>Loan Breakdown</h2>
 <div id="info">
-  <p>Interest paid: {{ data?.totalInterest }}</p>
-  <p>Years left to pay off: {{ data?.yearsLeft }}</p>
-  <p>Number of payments: {{ data?.remainingPayments }} </p>
+  <h2>Loan Breakdown</h2>
+  <p>Total interest paid:<span class="value">{{ data?.totalInterest | currency }}</span></p>
+  <p>Years left to pay off:<span class="value">{{ data?.yearsLeft }}</span> </p>
+  <p>Number of payments:<span class="value">{{ data?.remainingPayments }}</span> </p>
 </div>
 <div id="chart-container">
   <div>
     <canvas #canvas id="canvas">{{ chart }}</canvas>
   </div>
 </div>
-<p>Back To Top</p>
+<a href="#calculator-container" class="top">Back To Top</a>
